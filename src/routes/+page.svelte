@@ -1,5 +1,10 @@
 <script lang="ts">
-    export let data: { streamed?: { views?: Promise<number> } };
+    export let data: { streamed?: { 
+        views?: Promise<number>, 
+        remembered?: Promise<number>, 
+        remembrances?: Promise<number> 
+        } 
+    };
 
     import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
@@ -32,24 +37,30 @@
     <article>
 		<div>
 			<hgroup>
-				<h1>Input Test</h1>
-				<h2>Using inputs</h2>
+				<h1>Things To Remember</h1>
+				<h2>or not</h2>
 			</hgroup>
 
 			<form method="POST" use:enhance>
 				<input
 					type="text"
-					name="rememberthis"
+					name="remembered"
 					placeholder="What do you want to remember?"
-					aria-label="Rememberthis"
+					aria-label="remembered"
 					autocomplete="off"
-					value={form?.data?.rememberthis ?? ''}
+					value={data.remembered ?? ''}
 				/>
-				{#if form?.errors?.rememberthis}
+				{#if form?.errors?.remembered}
 					<p class="error">This is field Required</p>
 				{/if}
 				<button type="submit" class="contrast">Save</button>
 			</form>
+            Past remembrances:
+            <ul>
+                {#each data.remembrances as remembrance, index (remembrance.id)}
+                <li>{remembrance.id}) {remembrance.remembered}</li>
+                {/each}
+            </ul>
 		</div>
 		<div />
 	</article>
