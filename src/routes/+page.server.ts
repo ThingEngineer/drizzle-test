@@ -2,7 +2,7 @@ import { conn } from '$lib/db/conn.server.js';
 import { PageInsights, RememberThis } from '$lib/db/schema.js';
 import { eq, desc } from 'drizzle-orm';
 
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { zfd } from 'zod-form-data';
 
 import type { Actions, PageServerLoad } from './$types';
