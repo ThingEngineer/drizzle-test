@@ -30,7 +30,9 @@
     <nav>
       <ul class="navItems">
         <li class="navItem"><a href="/">Home</a></li>
+        <li class="navItem"><a href="/auth">Auth Button</a></li>
         <li class="navItem"><a href="/protected">Protected</a></li>
+        <li class="navItem"><a href="/vercel">Vercel DB Test</a></li>
       </ul>
     </nav>
   </header>

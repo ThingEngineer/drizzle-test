@@ -1,4 +1,4 @@
-import { conn } from '$lib/db/conn.server.js';
+import { db } from '$lib/db/db.server.js';
 import { PageInsights, RememberThis } from '$lib/db/schema.js';
 import { eq, desc } from 'drizzle-orm';
 
@@ -16,20 +16,20 @@ export const load: PageServerLoad = async () => {
 };
 
 const fetchViews = async () => {
-	const insights = await conn.select().from(PageInsights).where(eq(PageInsights.id, 1));
+	const insights = await db.select().from(PageInsights).where(eq(PageInsights.id, 1));
 	const views = ++insights[0].views;
-	await conn.update(PageInsights).set({ views }).where(eq(PageInsights.id, 1)).returning();
+	await db.update(PageInsights).set({ views }).where(eq(PageInsights.id, 1)).returning();
 
 	return views;
 };
 
 const fetchLastRemembered = async () => {
-	const remembered = await conn.select().from(RememberThis).orderBy(desc(RememberThis.id)).limit(1);
+	const remembered = await db.select().from(RememberThis).orderBy(desc(RememberThis.id)).limit(1);
 	return remembered[0].remembered;
 };
 
 const fetchRemembered = async () => {
-	const remembrances = await conn.select().from(RememberThis).orderBy(desc(RememberThis.id));
+	const remembrances = await db.select().from(RememberThis).orderBy(desc(RememberThis.id));
 	// Remove the last one (most recent entry) since it will be displayed in the input field
 	remembrances.shift(); // Since we ordered these decending, the first one is the last one so pop() would remove id:1
 	return remembrances;
@@ -56,6 +56,6 @@ export const actions: Actions = {
 
 		const remembered = result.data.remembered;
 
-		await conn.insert(RememberThis).values({ remembered: remembered });
+		await db.insert(RememberThis).values({ remembered: remembered });
 	}
 } satisfies Actions;

@@ -2,7 +2,7 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
-const isProd = process.env.NODE_ENV !== 'development'; // true in production, false in development
+const isProd = process.env.NODE_ENV === 'production'; // true in production, false in development
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
